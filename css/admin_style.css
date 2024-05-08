@@ -1,0 +1,14 @@
+@import url('https://fonts.googleapis.com/css2?family=Nunito+Sans:ital,opsz,wght@0,6..12,200..1000;1,6..12,200..1000&display=swap');
+
+:root{
+    --main-color: #2b6bd4;
+    --red: #DC143C;
+    --orange: #ffc107;
+    --black: #0B0B0B;
+    --white: #fff;
+    --green : #28a745;
+    --light-bg: #f5f5f5;
+    --light-color: #777;
+    --border: .2rem solid var(--black);
+    --box-shadow: 0 .5rem 1rem rgba(0,0,0,.1);
+}
