@@ -70,25 +70,6 @@
         setcookie('remember_token', $rememberToken, $expirationTime, '/', '', true, true);
     }
 
-    // Function to revoke Remember Me functionality for a user
-    function revokeRememberMe($conn, $adminId) {
-        // Clear remember token and expiration time from the database
-        $stmt = $conn->prepare("UPDATE admins SET remember_token = NULL, token_expires_at = NULL WHERE id = ?");
-        $stmt->execute([$adminId]);
-
-        // Remove remember token cookie from the user's browser
-        setcookie('remember_token', null, -1, '/');
-    }
-
-    // Handle user request to revoke Remember Me functionality
-    if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['revoke_remember_me'])) {
-        // Revoke Remember Me functionality for the current user
-        revokeRememberMe($conn, $_SESSION['admin_id']);
-        // Optionally, you can redirect the user to their account settings page or a confirmation page
-        header("Location: account_settings.php");
-        exit();
-    }
-
     // Check for remembered sessions
     if (!isset($_SESSION['admin_id']) && isset($_COOKIE['remember_token'])) {
         // Check if the remember token exists in the database and is valid
@@ -139,12 +120,26 @@
             $encryptedPassword = encrypt($pass, $key);
             $rememberToken = bin2hex(random_bytes(32)); // Adjust the length of the token as needed
 
+            $encryptedPassword = encrypt($pass, $key);
+            $encryptedPasswordKey = $encryptedPassword['key']; // Récupérez la clé de cryptage
+
             // Insert admin data into the database
-            $stmt = $conn->prepare("INSERT INTO admins (name, email, password, remember_token) VALUES (:name, :email, :password, :remember_token)");
+            // $stmt = $conn->prepare("INSERT INTO admins (name, email, password, remember_token) VALUES (:name, :email, :password, :remember_token)");
+            // $stmt = $conn->prepare("INSERT INTO admins (name, email, password, password_key, remember_token) VALUES (:name, :email, :password, :password_key, :remember_token)");
+            // $stmt->bindParam(':name', $name);
+            // $stmt->bindParam(':email', $email);
+            // $stmt->bindParam(':password', $encryptedPassword['data']);
+            // $stmt->bindParam(':remember_token', $rememberToken);
+            // $stmt->bindParam(':password_key', $encryptedPassword['key']);
+            // $stmt->bindParam(':password_key', $encryptedPasswordKey);
+            $stmt = $conn->prepare("INSERT INTO admins (name, email, password, password_key, remember_token) VALUES (:name, :email, :password, :password_key, :remember_token)");
+
             $stmt->bindParam(':name', $name);
             $stmt->bindParam(':email', $email);
             $stmt->bindParam(':password', $encryptedPassword['data']);
             $stmt->bindParam(':remember_token', $rememberToken);
+            $stmt->bindParam(':password_key', $encryptedPassword['key']);
+
             if ($stmt->execute()) {
                 // Get the ID of the newly inserted admin
                 $adminId = $conn->lastInsertId();
@@ -241,7 +236,7 @@
             <input type="email" name="email" required placeholder="Enter your email" maxlength="50" class="box" oninput="this.value = this.value.replace(/\s/g, '')" autocomplete="off">
 
             <div style="position: relative;">
-                <input type="password" id="password" name="pass" required placeholder="Enter your password" maxlength="20" class="box password-field" autocomplete="off">
+                <input type="password" id="password" name="pass" required placeholder="Enter your password" maxlength="20" class="box password-field" autocomplete="off" oninput="this.value = this.value.replace(/\s/g, '')">
                 <span class="close-eye-icon image" id="close-eye"></span> <!-- Added id for targeting in JavaScript -->
                 <span class="open-eye-icon image" id="open-eye"></span> <!-- Added id for targeting in JavaScript -->
             </div>
@@ -251,24 +246,11 @@
             </div>
 
             <input type="password" name="cpass" required placeholder="Confirm your password" maxlength="20" class="box" oninput="this.value = this.value.replace(/\s/g, '')">
+
             <!-- The Remember Me checkbox here -->
             <div class="remember-container">
                 <input type="checkbox" name="remember_me" id="remember_me" required>
                 <label for="remember_me" class="js-remeber-me"><strong>Remember Me </strong></label>
-            </div>
-
-            <div class="revoke-container">
-
-                <div class="revoke">
-                    <input type="checkbox" name="revoke_remember_me" id="revoke_remember_me">
-                    <label for="revoke_remember_me" class="js-revoke-remeber-me"><strong>Revoke Remember Me</strong></label>
-                </div>
-
-                <div class="text">
-                <span>⚠️ Please read this scripture : </span>By checking this box <strong>( Revoke Remember Me )</strong>, you will revoke the 'Remember Me' functionality for your account. This means that your session will not persist across browser sessions, enhancing the security of your account, especially if you're using a shared or public computer. 
-                    We recommend using this option if you're accessing the site from a device that others may also use.
-                </div>
-
             </div>
             
             <input type="submit" value="Register Now" class="btn" name="submit">
