@@ -12,3 +12,536 @@
     --border: .2rem solid var(--black);
     --box-shadow: 0 .5rem 1rem rgba(0,0,0,.1);
 }
+
+*{
+    font-family: "Nunito Sans", sans-serif;
+    margin: 0;
+    padding: 0;
+    text-decoration: none;
+    outline: none;
+    border: none;
+}
+
+*::selection{
+    color: var(--white);
+    background-color: var(--main-color);
+}
+
+::-webkit-scrollbar{
+    width: 1rem;
+    height: .5rem;
+}
+
+::-webkit-scrollbar-track{
+    background-color: none;
+}
+
+::-webkit-scrollbar-thumb{
+    background-color: var(--main-color);
+}
+
+html{
+    font-size: 62.25%;
+    overflow-x: hidden;
+}
+
+body{
+    background-color: var(--light-bg);
+    min-height: 100vh;
+    overflow-y: scroll;
+}
+
+section{
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 2rem;
+}
+
+.btn1,
+.delete-btn,
+.option-btn{
+    display: block;
+    margin-top: 1rem;
+    border-radius: .5rem;
+    cursor: pointer;
+    font-size: 1.8rem;
+    /* width: 100%; */
+    width: calc(100% - 6rem);
+    color: var(--white);
+    padding: 1rem 3rem;
+    text-transform: capitalize;
+    text-align: center;
+}
+
+.option-btnn{
+    display: block;
+    margin-top: 1rem;
+    border-radius: .5rem;
+    cursor: pointer;
+    font-size: 1.8rem;
+    width: 100%;
+    /* width: calc(100% - 6rem); */
+    color: var(--white);
+    padding: 1rem 3rem;
+    text-transform: capitalize;
+    text-align: center;
+}
+
+.btn{
+    display: block;
+    margin-top: 1rem;
+    border-radius: .5rem;
+    cursor: pointer;
+    font-size: 1.8rem;
+    width: 100%;
+    color: var(--white);
+    padding: 1rem 3rem;
+    text-transform: capitalize;
+    text-align: center;
+}
+
+.btn,
+.btn1{
+    background-color: var(--main-color);
+}
+
+.delete-btn{
+    background-color: var(--red);
+}
+
+.option-btn{
+    background-color: var(--orange);
+    width: 100%;
+}
+
+
+.delete-btn:hover,
+.option-btn:hover{
+    background-color: var(--black);
+}
+
+.btn:hover{
+    color: var(--main-color);
+    background-color: var(--black);
+}
+
+.flex-btn{
+    display: flex;
+    gap: 1rem;
+    align-items: center;
+    margin: 0 auto;
+    justify-content: center;
+    
+}
+
+/* =============================================== header_admin style starts ===============================================  */
+.header{
+    position: sticky;
+    top: 0;
+    left: 0;
+    right: 0;
+    background: var(--white);
+    box-shadow: var(--box-shadow);
+    z-index: 1000;
+}
+
+.header .flex{
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    position: relative;
+}
+
+.header .flex .logo{
+    font-size: 2.5rem;
+    color: var(--black);
+}
+
+.header .flex .logo span{
+    color: var(--main-color);
+}
+
+.header .flex .navbar a{
+    margin: 0 1rem;
+    font-size: 2rem;
+    color: var(--light-color);
+}
+
+.header .flex .navbar a:hover{
+    color: var(--main-color);
+    text-decoration: underline;
+}
+
+.header .flex .icons > *{
+    font-size: 2rem;
+    cursor: pointer;
+    color: var(--light-color);
+    margin-left: 1.7rem;
+}
+
+.header .flex .icons > *:hover{
+    color: var(--main-color);
+}
+
+.header .flex .profile{
+    position: absolute;
+    top: 125%;
+    right: 2rem;
+    background-color: var(--white);
+    box-shadow: var(--box-shadow);
+    border: var(--border);
+    border-radius: .5rem;
+    padding-top: 1rem;
+    padding: 1.2rem;
+    width: 30rem;
+    display: none;
+    animation: fadeIn 2s linear;
+}
+
+@keyframes fadeIn{
+    0%{
+        transform: translateY(1rem);
+    }
+}
+
+.header .flex .profile p{
+    margin-bottom: 1rem;
+    font-size: 2rem;
+    text-align: center;
+    color: var(--black);
+}
+
+.header .flex .profile.active{
+    display: inline-block;
+}
+
+#menu-btn{
+    display: none;
+}
+
+.no-scroll {
+    overflow: hidden;
+}
+
+.heading{
+    text-align: center;
+    margin-bottom: 2rem;
+    text-transform: uppercase;
+    color: var(--black);
+    font-size: 4rem;
+}
+
+/* =============================================== header_admin style ends ===============================================  */
+
+/* =============================================== Admin login and register style starts ===============================================  */
+
+/* ++++++++++++++++++++ CSS for password strength meter starts ++++++++++++++++++++ */
+.hidden {
+    display: none;
+}
+
+.progress {
+    width: 100%;
+    height: 20px;
+    background-color: #f5f5f5;
+    border-radius: 5px;
+    overflow: hidden;
+    margin-top: 10px;
+}
+
+.progress-bar {
+    width: 0%;
+    height: 100%;
+    transition: width 0.3s ease;
+}
+
+/* Red color for weak passwords */
+.bg-danger {
+    background-color: #dc3545 !important;
+}
+
+/* Yellow color for medium strength passwords */
+.bg-warning {
+    background-color: var(--orange) !important;
+}
+
+/* Green color for strong passwords */
+.bg-success {
+    background-color: var(--green) !important;
+}
+
+/* ++++++++++++++++++++ CSS for password strength meter starts ++++++++++++++++++++ */
+
+/* ++++++++++++++++++++ CSS for rember me starts ++++++++++++++++++++ */
+.remembe {
+    font-weight: bold; /* Make the text bold */
+    color: var(--black); /* Set the text color */
+    margin-right: 10px; /* Add right margin for spacing */
+    font-size: 1.8rem;
+}
+
+.remember-container{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-top: .5rem;
+}
+
+.revoke-container{
+    display: flex;
+    /* align-items: start; */
+    /* justify-content: start; */
+    flex-wrap: wrap;
+    gap:1.5rem;
+    padding: 1.5rem;
+    background: #fff6bf;
+    margin-top: 1rem;
+}
+
+.revoke-container .revoke{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex:1 1 15rem;
+}
+
+.revoke-container .text{
+    flex:1 1 85rem;
+    font-size: 1.5rem;
+    text-align: start;
+}
+
+.revoke-container .text span{
+    color: var(--black);
+    font-weight: bold;
+}
+
+.remember-container label,
+.revoke-container .revoke label{
+    cursor: pointer;
+    display: flex;
+    font-size: 1.5rem;
+    color: var(--black);
+    
+}
+
+.remember-container input[type='checkbox'],
+.revoke-container .revoke input[type='checkbox']{
+    cursor: pointer;
+    opacity: 0;
+    position: absolute;
+}
+
+.remember-container  label::before,
+.revoke-container .revoke label::before{
+    content: '';
+    width: 1.5rem;
+    height: 1.5rem;
+    border-radius: .15rem;
+    margin-right: .5rem;
+    border: 0.05rem solid black;
+}
+
+.remember-container  label:hover::before,
+.remember-container + label::after{
+    background-color: var(--main-color);
+}
+
+.revoke-container .revoke label:hover::before,
+.revoke-container .revoke + label::after{
+    background-color: var(--main-color);
+}
+
+.remember-container input[type='checkbox']:focus + label::before,
+.revoke-container .revoke input[type='checkbox']:focus + label::before{
+    box-shadow: 0 0 20px var(--box-shadow);
+}
+
+.remember-container input[type='checkbox']:checked + label::before,
+.revoke-container .revoke input[type='checkbox']:checked + label::before{
+    content: '\002714';
+    background-color: var(--main-color);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    color: var(--white);
+    font-size: 1.5rem;
+}
+/* ++++++++++++++++++++ CSS for rember me endss ++++++++++++++++++++ */
+
+.form_container {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 100%;
+}
+
+
+.form_container form{
+    background-color: var(--white);
+    border-radius: .5rem;
+    /* border: var(--border); */
+    box-shadow: var(--box-shadow);
+    padding: 2rem;
+    text-align: center;
+    max-width: 100%;
+    
+}
+
+.form_container form h3{
+    font-size: 2.5rem;
+    color: var(--black);
+    text-transform: uppercase;
+}
+
+.form_container form p{
+    margin: 1rem 0;
+    font-size: 2rem;
+    color: var(--light-color);
+}
+
+.form_container form p span{
+    color: var(--orange);
+}
+
+.form_container form input {
+    box-sizing: border-box;
+}
+
+.form_container form .box{
+    width: 100%; 
+    background-color: var(--light-bg);
+    padding: 1.4rem;
+    font-size: 1.8rem;
+    color: var(--black);
+    margin: 1rem 0;
+    border: var(--border);
+    border-radius: .5rem;
+    
+}
+
+.image {
+    position: absolute;
+    right: 10px;
+    top: 50%;
+    transform: translateY(-50%);
+    cursor: pointer;
+}
+
+.open-eye-icon {
+    width: 30px;
+    height: 30px;
+    background-image: url('../image/close-eye.svg');
+    background-size: cover;
+    /* display: none; */
+}
+
+.close-eye-icon{
+    width: 30px;
+    height: 30px;
+    background-image: url('../image/close-eye.svg');
+    background-size: cover;
+}
+
+.hide {
+    display: none;
+}
+
+.message {
+    position: absolute;
+    /* top: 20rem; */
+    top: 0;
+    left: 50%; /* Center horizontally */
+    transform: translateX(-50%); /* Adjust for half of the element's width */
+    max-width: 1200px;
+    background-color: #ccc;
+    padding: 2rem;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 1.5rem;
+    z-index: 1100;
+    width: 80%;
+}
+
+.message span{
+    font-size: 2rem;
+    color:var(--black);
+}
+
+.message i{
+    cursor: pointer;
+    color:var(--red);
+    font-size: 2.5rem;
+}
+
+.message i:hover{
+    color:var(--black);
+}
+
+/* ++++++++++++++++++++++++++++  media queries starts ++++++++++++++++++++++++++++  */
+
+@media only screen and (max-width: 991px){
+    html{
+        font-size: 55%;
+    }
+}
+
+@media only screen and (max-width: 768px){
+    #menu-btn{
+        display: inline-block;
+    }
+
+    .header .flex .navbar {
+        position: absolute;
+        top: 99%;
+        left: 0;
+        right: 0;
+        border-top: var(--border);
+        border-bottom: var(--border);
+        background-color: var(--white);
+        clip-path: polygon(0 0, 100% 0, 100% 0, 0 0);
+        transition: .4s linear;
+        
+    }
+
+    .header .flex .navbar.active{
+        clip-path: polygon(0 0, 100% 0, 100% 100%, 0 100%);
+    }
+
+    .header .flex .navbar a{
+        display: block;
+        margin: 2rem;
+    }
+}
+
+@media only screen and (max-width: 450px){
+    html{
+        font-size: 55%;
+    }
+
+
+    .flex-btn{
+        flex-flow: column;
+        gap: 0rem;
+    }
+
+    .heading{
+        font-size: 3rem;
+    }
+
+    .show-products .box-container{
+        grid-template-columns: 1fr;
+    }
+
+    .option-btn,.delete-btn{
+        width: calc(100% - 5rem);
+    }
+
+    .placed-orders .box-container{
+        grid-template-columns: 1fr;
+    }
+}
+
+/* ++++++++++++++++++++++++++++  media queries ends ++++++++++++++++++++++++++++  */
