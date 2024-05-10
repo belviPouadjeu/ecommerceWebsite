@@ -99,6 +99,9 @@
         $pass = trim(filter_input(INPUT_POST, 'pass', FILTER_SANITIZE_FULL_SPECIAL_CHARS));
         $cpass = trim(filter_input(INPUT_POST, 'cpass', FILTER_SANITIZE_FULL_SPECIAL_CHARS));
 
+        // Check if the "Remember Me" checkbox is checked
+        $rememberMeChecked = isset($_POST['remember_me']) ? true : false;
+
         // Add regex validation for password
         if (!preg_match('/^[a-zA-Z0-9!@#$%^&*()_+}{:;?]{8}$/', $pass)) {
             $errorMessage[] = 'Password is 8 long and must contain letters, numbers and special characters.';
@@ -123,17 +126,7 @@
             $encryptedPassword = encrypt($pass, $key);
             $encryptedPasswordKey = $encryptedPassword['key']; // Récupérez la clé de cryptage
 
-            // Insert admin data into the database
-            // $stmt = $conn->prepare("INSERT INTO admins (name, email, password, remember_token) VALUES (:name, :email, :password, :remember_token)");
-            // $stmt = $conn->prepare("INSERT INTO admins (name, email, password, password_key, remember_token) VALUES (:name, :email, :password, :password_key, :remember_token)");
-            // $stmt->bindParam(':name', $name);
-            // $stmt->bindParam(':email', $email);
-            // $stmt->bindParam(':password', $encryptedPassword['data']);
-            // $stmt->bindParam(':remember_token', $rememberToken);
-            // $stmt->bindParam(':password_key', $encryptedPassword['key']);
-            // $stmt->bindParam(':password_key', $encryptedPasswordKey);
             $stmt = $conn->prepare("INSERT INTO admins (name, email, password, password_key, remember_token) VALUES (:name, :email, :password, :password_key, :remember_token)");
-
             $stmt->bindParam(':name', $name);
             $stmt->bindParam(':email', $email);
             $stmt->bindParam(':password', $encryptedPassword['data']);
@@ -145,7 +138,13 @@
                 $adminId = $conn->lastInsertId();
 
                 // Update the token expiration time for the new admin
-                updateRememberToken($conn, $adminId);
+                // updateRememberToken($conn, $adminId);
+
+                // If "Remember Me" is checked, create a cookie with the remember token
+                if ($rememberMeChecked) {
+                    // Generate a new remember token and update the database
+                    updateRememberToken($conn, $adminId);
+                }
 
                 // Redirect to dashboard or authenticated page
                 header("Location: dashboard.php");
